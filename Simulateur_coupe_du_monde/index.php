@@ -1,14 +1,16 @@
 <?php
 
+
+
+
 if(isset($_COOKIE["TheResolteMatches"])){
 
     $matches = json_decode($_COOKIE["TheResolteMatches"] , true);
     // header("Location: " . $_SERVER["REQUEST_URI"]);
     // exit();
     
-
 }else {
-
+    
     $matches = array(
 
         "MoroccoVsCroatia" => array ("Morocco" => 0 , "Croatia" => 0 , "Status" => false ),
@@ -20,7 +22,6 @@ if(isset($_COOKIE["TheResolteMatches"])){
     
     );
 }
-
 
 
 
@@ -37,10 +38,60 @@ if(isset($_COOKIE["TheResolteTable"])){
         "resoltCanada" => array ("PTS." => 0 , "PAR." => 0 ,"GAN." => 0 , "EMP." => 0 , "PER." => 0 , "G.F." => 0 , "G.C." => 0 , "+/-" => 0 ),
     );
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
 
+$DataSortTable = [
+                    [ 
+                        [
+                            $resoltMatches["resoltMorocco"]["PTS."] , $resoltMatches["resoltMorocco"]["+/-"] , $resoltMatches["resoltMorocco"]["G.F."] 
+                        ], 
+                        [
+                            $resoltMatches["resoltMorocco"]["PAR."] , $resoltMatches["resoltMorocco"]["GAN."] , $resoltMatches["resoltMorocco"]["EMP."] ,
+                            $resoltMatches["resoltMorocco"]["PER."] , $resoltMatches["resoltMorocco"]["G.C."] , "Morocco" 
+                        ]
+                    ],
+                    [ 
+                        [
+                            $resoltMatches["resoltCroatia"]["PTS."] , $resoltMatches["resoltCroatia"]["+/-"] , $resoltMatches["resoltCroatia"]["G.F."]
+                        ],
+                        [ 
+                            $resoltMatches["resoltCroatia"]["PAR."] , $resoltMatches["resoltCroatia"]["GAN."] , $resoltMatches["resoltCroatia"]["EMP."] ,
+                            $resoltMatches["resoltCroatia"]["PER."] , $resoltMatches["resoltCroatia"]["G.C."] , "Croatia" 
+                        ]
+                    ],
+                    [
+                        [
+                            $resoltMatches["resoltBelgium"]["PTS."] , $resoltMatches["resoltBelgium"]["+/-"] , $resoltMatches["resoltBelgium"]["G.F."] 
+                        ], 
+                        [
+                            $resoltMatches["resoltBelgium"]["PAR."] , $resoltMatches["resoltBelgium"]["GAN."] , $resoltMatches["resoltBelgium"]["EMP."] ,
+                            $resoltMatches["resoltBelgium"]["PER."] , $resoltMatches["resoltBelgium"]["G.C."], "Belgium" 
+                        ], 
+                    ],
+                    [
+                        [ 
+                            $resoltMatches["resoltCanada"]["PTS."]  , $resoltMatches["resoltCanada"]["+/-"]  , $resoltMatches["resoltCanada"]["G.F."] 
+                        ], 
+                        [
+                            $resoltMatches["resoltCanada"]["PAR."]  , $resoltMatches["resoltCanada"]["GAN."]  , $resoltMatches["resoltCanada"]["EMP."] ,
+                            $resoltMatches["resoltCanada"]["PER."]  , $resoltMatches["resoltCanada"]["G.C."] , "Canada" 
+                        ], 
+                    ],
+                ];
+
+
+rsort($DataSortTable);
+
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST["match"])){
 
@@ -183,7 +234,6 @@ setcookie("TheResolteTable" ,json_encode($resoltMatches) , strtotime("+1 month")
 
 
 
-
 ?>
 
 
@@ -225,16 +275,16 @@ setcookie("TheResolteTable" ,json_encode($resoltMatches) , strtotime("+1 month")
                 
             <div class="row bg-dark text-white mt-4 mb-4">
             <img class="col" src="img/<?php echo $datakey[0]?>.png" style="width: 80px ; height: 80px ; margin-left:10px;" alt="reqdasqedsa">
-            <form class="col d-flex gap-4 " method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
-                <input <?php if($value["Status"] === true){echo "readonly";}?> class="w-25 mt-2 mb-2 rounded" min="0" name="ValueOne" value="<?php echo $datavalue[0] ?>" type="number">
-                <input <?php if($value["Status"] === true){echo "readonly";}?> class="w-25 mt-2 mb-2 rounded" min="0" name="KeyOne" value="<?php echo $datakey[0] ?>" type="hidden">
-                <div>
+            <form class="col d-flex" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
+                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded" min="0" name="ValueOne" value="<?php echo $datavalue[0] ?>" type="number" style="width:50px; height: 50px ;  margin-top: 13px;">
+                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded" min="0" name="KeyOne" value="<?php echo $datakey[0] ?>" type="hidden">
+                <div style="margin:0 20px ; ">
                     <p class="mt-2 mb-1 fw-bold text-center">VS</p>
                     <input class="bg-success text-white" name="match" type="hidden" value="<?php echo $key?>">
                     <input  <?php if($value["Status"] === true){echo "disabled";}?> class="bg-success text-white" value="Shoot" type="submit">
                 </div>
-                <input <?php if($value["Status"] === true){echo "readonly";}?> class="w-25 mt-2 mb-2 rounded p-2" min="0" name="ValueTwo" value="<?php echo $datavalue[1] ?>" type="number">
-                <input <?php if($value["Status"] === true){echo "readonly";}?> class="w-25 mt-2 mb-2 rounded p-2" min="0" name="KeyTwo" value="<?php echo $datakey[1] ?>" type="hidden">
+                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded p-2" min="0" name="ValueTwo" value="<?php echo $datavalue[1] ?>" type="number" style="width:50px ; height: 50px ;  margin-top: 13px;">
+                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded p-2" min="0" name="KeyTwo" value="<?php echo $datakey[1] ?>" type="hidden">
             </form>
             <img class="col" src="img/<?php echo $datakey[1]?>.png" style="width: 80px ; height: 80px" alt="eqda">
         </div>
@@ -278,51 +328,51 @@ setcookie("TheResolteTable" ,json_encode($resoltMatches) , strtotime("+1 month")
             <tbody>
                 <tr>
                     <th scope="row">1</th>
-                    <td><img src="img/Morocco.png" style="width: 100px ; height: 80px ;" alt=""></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["PTS."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["PAR."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["GAN."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["EMP."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["PER."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["G.F."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["G.C."]?></td>
-                    <td><?php echo $resoltMatches["resoltMorocco"]["+/-"] ?></td>
+                    <td><img src="img/<?php echo $DataSortTable[0][1][5]?>.png" style="width: 100px ; height: 80px ;" alt=""></td>
+                    <td><?php echo $DataSortTable[0][0][0] ?></td>
+                    <td><?php echo $DataSortTable[0][1][0] ?></td>
+                    <td><?php echo $DataSortTable[0][1][1] ?></td>
+                    <td><?php echo $DataSortTable[0][1][2] ?></td>
+                    <td><?php echo $DataSortTable[0][1][3] ?></td>
+                    <td><?php echo $DataSortTable[0][0][2] ?></td>
+                    <td><?php echo $DataSortTable[0][1][4] ?></td>
+                    <td><?php echo $DataSortTable[0][0][1] ?></td>
                 </tr>
                 <tr>
                     <th scope="row">2</th>
-                    <td><img src="img/Croatia.png" style="width: 100px ; height: 80px ;" alt=""></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["PTS."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["PAR."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["GAN."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["EMP."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["PER."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["G.F."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["G.C."]?></td>
-                    <td><?php echo $resoltMatches["resoltCroatia"]["+/-"] ?></td>
+                    <td><img src="img/<?php echo $DataSortTable[1][1][5]?>.png" style="width: 100px ; height: 80px ;" alt=""></td>
+                    <td><?php echo $DataSortTable[1][0][0] ?></td>
+                    <td><?php echo $DataSortTable[1][1][0] ?></td>
+                    <td><?php echo $DataSortTable[1][1][1] ?></td>
+                    <td><?php echo $DataSortTable[1][1][2] ?></td>
+                    <td><?php echo $DataSortTable[1][1][3] ?></td>
+                    <td><?php echo $DataSortTable[1][0][2] ?></td>
+                    <td><?php echo $DataSortTable[1][1][4] ?></td>
+                    <td><?php echo $DataSortTable[1][0][1] ?></td>
                 </tr>
                 <tr>
                     <th scope="row">3</th>
-                    <td><img src="img/Belgium.png" style="width: 100px ; height: 80px ;" alt=""></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["PTS."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["PAR."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["GAN."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["EMP."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["PER."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["G.F."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["G.C."]?></td>
-                    <td><?php echo $resoltMatches["resoltBelgium"]["+/-"] ?></td>
+                    <td><img src="img/<?php echo $DataSortTable[2][1][5]?>.png" style="width: 100px ; height: 80px ;" alt=""></td>
+                    <td><?php echo $DataSortTable[2][0][0] ?></td>
+                    <td><?php echo $DataSortTable[2][1][0] ?></td>
+                    <td><?php echo $DataSortTable[2][1][1] ?></td>
+                    <td><?php echo $DataSortTable[2][1][2] ?></td>
+                    <td><?php echo $DataSortTable[2][1][3] ?></td>
+                    <td><?php echo $DataSortTable[2][0][2] ?></td>
+                    <td><?php echo $DataSortTable[2][1][4] ?></td>
+                    <td><?php echo $DataSortTable[2][0][1] ?></td>
                 </tr>
                 <tr>
                 <th scope="row">4</th>
-                    <td><img src="img/Canada.png" style="width: 100px ; height: 80px ;" alt=""></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["PTS."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["PAR."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["GAN."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["EMP."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["PER."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["G.F."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["G.C."]?></td>
-                    <td><?php echo $resoltMatches["resoltCanada"]["+/-"] ?></td>
+                    <td><img src="img/<?php echo $DataSortTable[3][1][5]?>.png" style="width: 100px ; height: 80px ;" alt=""></td>
+                    <td><?php echo $DataSortTable[3][0][0] ?></td>
+                    <td><?php echo $DataSortTable[3][1][0] ?></td>
+                    <td><?php echo $DataSortTable[3][1][1] ?></td>
+                    <td><?php echo $DataSortTable[3][1][2] ?></td>
+                    <td><?php echo $DataSortTable[3][1][3] ?></td>
+                    <td><?php echo $DataSortTable[3][0][2] ?></td>
+                    <td><?php echo $DataSortTable[3][1][4] ?></td>
+                    <td><?php echo $DataSortTable[3][0][1] ?></td>
                 </tr>
             </tbody>
         </table>
