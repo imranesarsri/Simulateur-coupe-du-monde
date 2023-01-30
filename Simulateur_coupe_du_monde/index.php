@@ -276,12 +276,12 @@ setcookie("TheResolteTable" ,json_encode($resoltMatches) , strtotime("+1 month")
             <div class="row bg-dark text-white mt-4 mb-4">
             <img class="col" src="img/<?php echo $datakey[0]?>.png" style="width: 80px ; height: 80px ; margin-left:10px;" alt="reqdasqedsa">
             <form class="col d-flex" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
-                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded" min="0" name="ValueOne" value="<?php echo $datavalue[0] ?>" type="number" style="width:50px; height: 50px ;  margin-top: 13px;">
-                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded" min="0" name="KeyOne" value="<?php echo $datakey[0] ?>" type="hidden">
+                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded p-2" min="0" name="ValueOne" value="<?php echo $datavalue[0] ?>" type="number" style="width:50px; height: 50px ;  margin-top: 13px;">
+                <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded p-2" min="0" name="KeyOne" value="<?php echo $datakey[0] ?>" type="hidden">
                 <div style="margin:0 20px ; ">
                     <p class="mt-2 mb-1 fw-bold text-center">VS</p>
                     <input class="bg-success text-white" name="match" type="hidden" value="<?php echo $key?>">
-                    <input  <?php if($value["Status"] === true){echo "disabled";}?> class="bg-success text-white" value="Shoot" type="submit">
+                    <input  <?php if($value["Status"] === true){echo "disabled";}?> class="btn btn-success text-white" value="Shoot" type="submit">
                 </div>
                 <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded p-2" min="0" name="ValueTwo" value="<?php echo $datavalue[1] ?>" type="number" style="width:50px ; height: 50px ;  margin-top: 13px;">
                 <input <?php if($value["Status"] === true){echo "readonly";}?> class="rounded p-2" min="0" name="KeyTwo" value="<?php echo $datakey[1] ?>" type="hidden">
