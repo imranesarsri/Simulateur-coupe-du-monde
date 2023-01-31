@@ -6,8 +6,7 @@
 if(isset($_COOKIE["TheResolteMatches"])){
 
     $matches = json_decode($_COOKIE["TheResolteMatches"] , true);
-    // header("Location: " . $_SERVER["REQUEST_URI"]);
-    // exit();
+
     
 }else {
     
@@ -43,44 +42,45 @@ if(isset($_COOKIE["TheResolteTable"])){
 
 
 
-$DataSortTable = [
-                    [ 
-                        [
-                            $resoltMatches["resoltMorocco"]["PTS."] , $resoltMatches["resoltMorocco"]["+/-"] , $resoltMatches["resoltMorocco"]["G.F."] 
-                        ], 
-                        [
-                            $resoltMatches["resoltMorocco"]["PAR."] , $resoltMatches["resoltMorocco"]["GAN."] , $resoltMatches["resoltMorocco"]["EMP."] ,
-                            $resoltMatches["resoltMorocco"]["PER."] , $resoltMatches["resoltMorocco"]["G.C."] , "Morocco" 
-                        ]
-                    ],
-                    [ 
-                        [
-                            $resoltMatches["resoltCroatia"]["PTS."] , $resoltMatches["resoltCroatia"]["+/-"] , $resoltMatches["resoltCroatia"]["G.F."]
-                        ],
-                        [ 
-                            $resoltMatches["resoltCroatia"]["PAR."] , $resoltMatches["resoltCroatia"]["GAN."] , $resoltMatches["resoltCroatia"]["EMP."] ,
-                            $resoltMatches["resoltCroatia"]["PER."] , $resoltMatches["resoltCroatia"]["G.C."] , "Croatia" 
-                        ]
-                    ],
+$DataSortTable =
+            [
+                [ 
                     [
-                        [
-                            $resoltMatches["resoltBelgium"]["PTS."] , $resoltMatches["resoltBelgium"]["+/-"] , $resoltMatches["resoltBelgium"]["G.F."] 
-                        ], 
-                        [
-                            $resoltMatches["resoltBelgium"]["PAR."] , $resoltMatches["resoltBelgium"]["GAN."] , $resoltMatches["resoltBelgium"]["EMP."] ,
-                            $resoltMatches["resoltBelgium"]["PER."] , $resoltMatches["resoltBelgium"]["G.C."], "Belgium" 
-                        ], 
-                    ],
+                        $resoltMatches["resoltMorocco"]["PTS."] , $resoltMatches["resoltMorocco"]["+/-"] , $resoltMatches["resoltMorocco"]["G.F."] 
+                    ], 
                     [
-                        [ 
-                            $resoltMatches["resoltCanada"]["PTS."]  , $resoltMatches["resoltCanada"]["+/-"]  , $resoltMatches["resoltCanada"]["G.F."] 
-                        ], 
-                        [
-                            $resoltMatches["resoltCanada"]["PAR."]  , $resoltMatches["resoltCanada"]["GAN."]  , $resoltMatches["resoltCanada"]["EMP."] ,
-                            $resoltMatches["resoltCanada"]["PER."]  , $resoltMatches["resoltCanada"]["G.C."] , "Canada" 
-                        ], 
+                        $resoltMatches["resoltMorocco"]["PAR."] , $resoltMatches["resoltMorocco"]["GAN."] , $resoltMatches["resoltMorocco"]["EMP."] ,
+                        $resoltMatches["resoltMorocco"]["PER."] , $resoltMatches["resoltMorocco"]["G.C."] , "Morocco" 
+                    ]
+                ],
+                [ 
+                    [
+                        $resoltMatches["resoltCroatia"]["PTS."] , $resoltMatches["resoltCroatia"]["+/-"] , $resoltMatches["resoltCroatia"]["G.F."]
                     ],
-                ];
+                    [ 
+                        $resoltMatches["resoltCroatia"]["PAR."] , $resoltMatches["resoltCroatia"]["GAN."] , $resoltMatches["resoltCroatia"]["EMP."] ,
+                        $resoltMatches["resoltCroatia"]["PER."] , $resoltMatches["resoltCroatia"]["G.C."] , "Croatia" 
+                    ]
+                ],
+                [
+                    [
+                        $resoltMatches["resoltBelgium"]["PTS."] , $resoltMatches["resoltBelgium"]["+/-"] , $resoltMatches["resoltBelgium"]["G.F."] 
+                    ], 
+                    [
+                        $resoltMatches["resoltBelgium"]["PAR."] , $resoltMatches["resoltBelgium"]["GAN."] , $resoltMatches["resoltBelgium"]["EMP."] ,
+                        $resoltMatches["resoltBelgium"]["PER."] , $resoltMatches["resoltBelgium"]["G.C."], "Belgium" 
+                    ], 
+                ],
+                [
+                    [ 
+                        $resoltMatches["resoltCanada"]["PTS."]  , $resoltMatches["resoltCanada"]["+/-"]  , $resoltMatches["resoltCanada"]["G.F."] 
+                    ], 
+                    [
+                        $resoltMatches["resoltCanada"]["PAR."]  , $resoltMatches["resoltCanada"]["GAN."]  , $resoltMatches["resoltCanada"]["EMP."] ,
+                        $resoltMatches["resoltCanada"]["PER."]  , $resoltMatches["resoltCanada"]["G.C."] , "Canada" 
+                    ], 
+                ],
+            ];
 
 
 rsort($DataSortTable);
@@ -95,6 +95,7 @@ rsort($DataSortTable);
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST["match"])){
 
+    header("Refresh:0");
     $matches[$_POST["match"]][$_POST["KeyOne"]] = $_POST["ValueOne"];
     $matches[$_POST["match"]][$_POST["KeyTwo"]] = $_POST["ValueTwo"];
     $matches[$_POST["match"]]["Status"] = true;
@@ -106,6 +107,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST["match"])){
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST" && isset( $_POST["RESET"])){
+    header("Refresh:0");
 
     $matches = array(
 
@@ -150,8 +152,9 @@ $DataValueCantey = [] ;
 
 if( isset( $_POST["match"])){
 
-foreach($matches[$_POST["match"]] as $KeyMatches => $ValueMatches){
-    
+    foreach($matches[$_POST["match"]] as $KeyMatches => $ValueMatches){
+
+
     if($KeyMatches == "Status"){
         continue;
     }
